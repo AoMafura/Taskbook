@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<%- include ('./partials/head.ejs') %>
+
+<body>
+    <div class="container col-sm-12 col-md-10 col-lg-6 offset md-2 offset-lg-3 my-5 py-5 px-0">
+        
+        <form action="/logout" method="get">
+            <button class="btn btn-danger pb-2 mb-3" type="submit">Logout</button>
+        </form>
+
+        <div class="container col-sm-12 pb-3 mb-2">
+
+            <center><h1 class="text-success pb-3">MyTaskBook</h1></center>
+            
+            <form action="/home/createTask" method="post">
+                <input type="hidden" class="form-control" name="id" value="" id="id">
+                <div class="row">
+                    <div class="offset-md-0 offset-sm-1 col-md-8 col-sm-10 pt-2 px-0">
+                        <input type="text" class="form-control col-sm-12" name="task" id="task">
+                    </div>
+                    <div class="col-md-4 col-sm-6 offset-md-0  offset-sm-3 pt-2 px-2">
+                        <button class="btn btn-success col-sm-12" type="submit">New Task</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <% if(typeof tasks!=='undefined') {%>
+        <div class="container bg-light col-sm-12 py-2" style="border-radius: 5px;">
+            <% for(var i=0;i < tasks.length;i++){  var stat;%>
+                <div class="container col-sm-12 pt-4 my-1" id= "<%= tasks[i].id %>">
+                    <span>
+                        <div class="entry row">
+                        <% if (tasks[i].status === "Pending"){ stat = 'Completed';%>
+                            <div class="tasks border bg-white col-sm-8 p-2"  style="border-radius: 5px;overflow: hidden;">
+                                <label ><%= tasks[i].task %></label>
+                            </div>
+                            <div class="col-sm-2 p-2">
+                                <form action="/home/updateTask" method="post"><input type="hidden" name="id" value="<%= tasks[i].id %>">
+                                    <button class="btn btn-success edit col-sm-12">Completed</button>
+                                </form>
+                            </div>
+                            <div class="col-sm-2 p-2">
+                                <form action="/home/deleteTask" method="post"><input type="hidden" name="id" value="<%= tasks[i].id %>">
+                                    <button type="submit" class="btn btn-danger col-sm-12">Delete</button>
+                                </form>
+                            </div>
+
+                            <% }else{ stat = 'Pending';%>
+                            
+                            <div class="tasks border bg-light col-sm-8 p-2"  style="border-radius: 5px;overflow: hidden;">
+                                <label style="text-decoration: line-through;"><%= tasks[i].task %></label>
+                            </div>
+                            <div class="offset-sm-1 col-sm-2 p-2">
+                                <form action="/home/deleteTask" method="post"><input type="hidden" name="id" value="<%= tasks[i].id %>">
+                                    <button type="submit" class="btn btn-danger col-sm-12">Delete</button>
+                                </form>
+                            </div>
+                        <% }%>
+                            <form action="/stat" method="post"><input type="hidden" name="id" value="<%= tasks[i].id %>">
+                                <input type="hidden" name="stat" value="<%= stat %>">
+                                <button type="submit" style="visibility: hidden;"></button>
+                            </form>
+                        </div>
+                    </span>
+                </div>
+            <%} %>
+        </div>
+        <% } %>
+    </div>
+</body>
+</html>

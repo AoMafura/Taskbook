@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<%- include ('./partials/head.ejs') %>
+<body>
+    <div class="container col-sm-12 col-md-8 col-lg-4 offset md-2 offset-lg-4 my-5 py-5">
+        <center><h1 class="text-success">MyTaskBook</h1></center>
+        
+        <% if(typeof err!=='undefined') {%>
+            <label class="my-2 text-danger"><%= err%></label><%
+        }else if(typeof success!=='undefined'){%>
+            <label class="my-2 text-success"><%= success%></label><%
+        } %>
+
+        <div class="row" >
+            <div class="col align-self-center" style="padding-top: 1pc; display: block;" id="signin">
+                <form method="POST" action="/signin">
+                    <div class="mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-success offset-sm-1 col-sm-10" >Sign in</button>
+                </form>
+                <br>
+                <a href="#" id="0">Create Account?</a>
+             </div>
+
+             <div class="col align-self-center" style="padding-top: 1pc; display: none;" id="signup" >
+                <form method="POST" action="/signup">
+                    <div class="mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-success offset-sm-1 col-sm-10" >Sign up</button>
+                </form>
+                <br>
+                <a href="#" id="1">Already have an account?</a>
+             </div>
+
+        </div>
+    </div>
+    <script>
+    
+        var sign_in = document.getElementById("signin");
+        var sign_up = document.getElementById("signup");
+        document.getElementById("0").addEventListener("click",()=>{
+            sign_in.style.display = "none";
+            sign_up.style.display = "block";
+            
+        })
+        document.getElementById("1").addEventListener("click",()=>{
+            sign_in.style.display  = "block";
+            sign_up.style.display = "none";
+        })
+    </script>
+</body>
+</html>
